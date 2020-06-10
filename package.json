@@ -1,21 +1,58 @@
 {
-  "name": "purgeOS",
-  "version": "0.0.1",
+  "name": "purgeos",
   "description": "Purge old files from object storage.",
-  "main": "src/index.ts",
-  "repository": "https://github.com/skn0tt/purgeOS",
+  "version": "0.0.1",
   "author": "Simon Knott <info@simonknott.de>",
-  "license": "MIT",
-  "private": true,
-  "devDependencies": {
-    "@types/jest": "^26.0.0",
-    "@types/lodash": "^4.14.155",
-    "@types/node": "^14.0.13",
-    "jest": "^26.0.1",
-    "ts-jest": "^26.1.0",
-    "typescript": "^3.9.5"
+  "bin": {
+    "purgeOS": "./bin/run"
   },
+  "bugs": "https://github.com/https://github.com/skn0tt/purgeOS/issues",
   "dependencies": {
-    "lodash": "^4.17.15"
-  }
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/plugin-help": "^3",
+    "lodash": "^4.17.15",
+    "tslib": "^1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@oclif/test": "^1",
+    "@types/chai": "^4",
+    "@types/lodash": "^4.14.155",
+    "@types/mocha": "^5",
+    "@types/node": "^10",
+    "chai": "^4",
+    "eslint": "^5.13",
+    "eslint-config-oclif": "^3.1",
+    "eslint-config-oclif-typescript": "^0.1",
+    "mocha": "^5",
+    "nyc": "^14",
+    "ts-node": "^8",
+    "typescript": "^3.3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "homepage": "https://github.com/skn0tt/purgeOS",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "src/index.ts",
+  "oclif": {
+    "bin": "purgeOS"
+  },
+  "private": true,
+  "repository": "https://github.com/skn0tt/purgeOS",
+  "scripts": {
+    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "types": "lib/index.d.ts"
 }
