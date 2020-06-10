@@ -1,4 +1,4 @@
-import { GCSClient } from "./GCSClient";
+import {GCSClient} from './GCSClient'
 
 export interface ObjectData {
   id: string;
@@ -14,8 +14,8 @@ export interface ObjectStorageClient {
 
 export function getObjectStorageClient(env: any): ObjectStorageClient {
   switch (env.backend) {
-    case "gcs":
-    default:
-      return new GCSClient(env);
+  case 'gcs':
+  default:
+    return new GCSClient(env)
   }
 }

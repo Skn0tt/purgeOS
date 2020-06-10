@@ -1,7 +1,7 @@
-import * as assert from "assert";
+import * as assert from 'assert'
 
-describe("DefaultPurgingStrategy", () => {
-  it("tests", () => {
-    assert(true);
+describe('DefaultPurgingStrategy', () => {
+  it('tests', () => {
+    assert(true)
   })
 })

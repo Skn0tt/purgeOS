@@ -1,11 +1,12 @@
-import { ObjectStorageClient, ObjectData } from "./ObjectStorageClient";
-import { Config } from ".";
+import {ObjectStorageClient, ObjectData} from './ObjectStorageClient'
+import {Config} from '.'
 
 export class GCSClient implements ObjectStorageClient {
   constructor(config: Config) {}
 
   async getObjects(): Promise<ObjectData[]> {
-    return [];
+    return []
   }
+
   async purgeObjects(objects: ObjectData[]): Promise<void> {}
 }

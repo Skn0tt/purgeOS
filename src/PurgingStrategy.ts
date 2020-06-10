@@ -1,6 +1,6 @@
-import { ObjectData } from "./ObjectStorageClient";
-import { Config } from ".";
-import { makeDefaultPurgingStrategy } from "./DefaultPurgingStrategy";
+import {ObjectData} from './ObjectStorageClient'
+import {Config} from '.'
+import {makeDefaultPurgingStrategy} from './DefaultPurgingStrategy'
 
 export type PurgingStrategy = (
   objects: ObjectData[],
@@ -9,7 +9,7 @@ export type PurgingStrategy = (
 
 export function getPurgingStrategy(config: Config): PurgingStrategy {
   switch (config.strategy) {
-    case "default":
-      return makeDefaultPurgingStrategy(config);
+  case 'default':
+    return makeDefaultPurgingStrategy(config)
   }
 }
