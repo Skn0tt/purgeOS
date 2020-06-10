@@ -1,0 +1,21 @@
+{
+  "name": "purgeOS",
+  "version": "0.0.1",
+  "description": "Purge old files from object storage.",
+  "main": "src/index.ts",
+  "repository": "https://github.com/skn0tt/purgeOS",
+  "author": "Simon Knott <info@simonknott.de>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/jest": "^26.0.0",
+    "@types/lodash": "^4.14.155",
+    "@types/node": "^14.0.13",
+    "jest": "^26.0.1",
+    "ts-jest": "^26.1.0",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
+  }
+}
