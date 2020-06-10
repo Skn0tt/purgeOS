@@ -50,7 +50,7 @@
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "build": "rm -rf lib && tsc -b",
     "prepack": "yarn build && oclif-dev readme",
-    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "test": "nyc --extension .ts mocha --forbid-only \"src/**/*.spec.ts\"",
     "version": "oclif-dev readme && git add README.md"
   },
   "types": "lib/index.d.ts"
