@@ -48,7 +48,8 @@
   "repository": "https://github.com/skn0tt/purgeOS",
   "scripts": {
     "posttest": "eslint . --ext .ts --config .eslintrc",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
+    "build": "rm -rf lib && tsc -b",
+    "prepack": "yarn build && oclif-dev readme",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif-dev readme && git add README.md"
   },
