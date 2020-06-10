@@ -3,7 +3,6 @@ import {GCSClient} from './GCSClient'
 export interface ObjectData {
   id: string;
   name: string;
-  createdAt: Date;
   updatedAt: Date;
 }
 

@@ -2,6 +2,10 @@ import {ObjectData} from './ObjectStorageClient'
 import {Config} from '.'
 import {makeDefaultPurgingStrategy} from './DefaultPurgingStrategy'
 
+/**
+ * Given objects and the current date,
+ * it returns all objects to be purged.
+ */
 export type PurgingStrategy = (
   objects: ObjectData[],
   currentDate: Date
