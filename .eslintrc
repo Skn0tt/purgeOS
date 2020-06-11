@@ -4,6 +4,9 @@
     "oclif-typescript"
   ],
   "rules": {
-    "unicorn/filename-case": "off"
+    "unicorn/filename-case": "off",
+    "valid-jsdoc": "off",
+    "func-names": "off",
+    "no-constant-condition": "off"
   }
 }

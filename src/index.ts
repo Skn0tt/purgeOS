@@ -25,10 +25,10 @@ class PurgeOS extends Command {
       char: 'v',
     }),
     yes: flags.boolean({
-      description: "Skip Prompt",
-      env: "YES",
+      description: 'Skip Prompt',
+      env: 'YES',
       default: false,
-      char: "y"
+      char: 'y',
     }),
     backend: flags.enum({
       description: 'Storage Backend',
@@ -43,16 +43,16 @@ class PurgeOS extends Command {
       default: 'default',
     }) as flags.IOptionFlag<'default'>,
     bucket: flags.string({
-      description: "Bucket",
-      env: "BUCKET"
+      description: 'Bucket',
+      env: 'BUCKET',
     }),
     gcsClientEmail: flags.string({
-      description: "GCS Client Email",
-      env: "GCS_CLIENT_EMAIL"
+      description: 'GCS Client Email',
+      env: 'GCS_CLIENT_EMAIL',
     }),
     gcsPrivateKey: flags.string({
-      description: "GCS Private Key",
-      env: "GCS_PRIVATE_KEY"
+      description: 'GCS Private Key',
+      env: 'GCS_PRIVATE_KEY',
     }),
   };
 
@@ -72,8 +72,8 @@ class PurgeOS extends Command {
     const objectsToPurge = strategy(objects, new Date())
 
     if (objectsToPurge.length === 0) {
-      this.log("Nothing to purge.");
-      return;
+      this.log('Nothing to purge.')
+      return
     }
 
     if (flags.verbose) {
@@ -84,9 +84,9 @@ class PurgeOS extends Command {
     }
 
     if (!flags.yes) {
-      const confirmed = await cli.confirm("Purge?");
+      const confirmed = await cli.confirm('Purge?')
       if (!confirmed) {
-        return;
+        return
       }
     }
 
