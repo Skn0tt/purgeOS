@@ -1,4 +1,5 @@
 import {GCSClient} from './GCSClient'
+import {Config} from '.'
 
 export interface ObjectData<T = any> {
   id: string;
@@ -12,10 +13,9 @@ export interface StorageBackend {
   purgeObjects(objects: ObjectData[]): Promise<void>;
 }
 
-export function getStorageBackend(env: any): StorageBackend {
+export function getStorageBackend(env: Config): StorageBackend {
   switch (env.backend) {
   case 'gcs':
-  default:
     return new GCSClient(env)
   }
 }

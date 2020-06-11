@@ -19,7 +19,7 @@ Awesome to reduce your cloud bill 💵
 - [Storage Backends](#storage-backends)
   - [Google Cloud Storage](#google-cloud-storage)
 - [Purging Strategies](#purging-strategies)
-  - [Default](#default)
+  - [Tiered Retention](#tiered-retention)
 - [Contributing](#contributing)
 
 <!-- /code_chunk_output -->
@@ -33,8 +33,6 @@ You can use either the [NPM package](https://npmjs.org/package/purgeos) or the [
 ```sh-session
 $ yarn global add purgeos
 $ purgeOS \
-    --strategy=default \
-    --backend=gcs \
     --bucket=my-backup-bucket \
     --gcs-client-email=... \
     --gcs-private-key=...
@@ -42,8 +40,6 @@ $ purgeOS \
 
 ```sh-session
 $ docker run \
-  -e STRATEGY=default \
-  -e BACKEND=gcs \
   -e BUCKET=my-backup-bucket \
   -e GCS_CLIENT_EMAIL=... \
   -e GCS_PRIVATE_KEY=... \
@@ -72,9 +68,9 @@ Configuration:
 
 More strategies can be added easily, feel free to provide a PR! :)
 
-### Default
+### Tiered Retention
 
-Enable using `--strategy=default` or `STRATEGY=default`.
+Enable using `--strategy=tiered` or `STRATEGY=tiered`.
 
 Will retain hourly objects for the last day,  
 half-daily objects for the last week,  

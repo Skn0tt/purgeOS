@@ -5,7 +5,7 @@ import cli from 'cli-ux'
 
 export interface Config {
   backend: 'gcs';
-  strategy: 'default';
+  strategy: 'tiered';
   bucket?: string;
   gcsClientEmail?: string;
   gcsPrivateKey?: string;
@@ -39,9 +39,9 @@ class PurgeOS extends Command {
     strategy: flags.enum({
       description: 'Strategy',
       env: 'STRATEGY',
-      options: ['default'],
-      default: 'default',
-    }) as flags.IOptionFlag<'default'>,
+      options: ['tiered'],
+      default: 'tiered',
+    }) as flags.IOptionFlag<'tiered'>,
     bucket: flags.string({
       description: 'Bucket',
       env: 'BUCKET',

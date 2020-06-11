@@ -1,6 +1,6 @@
 import {ObjectData} from './StorageBackend'
 import {Config} from '.'
-import {makeDefaultPurgingStrategy} from './DefaultPurgingStrategy'
+import {makeTieredRetentionStrategy} from './TieredRetentionStrategy'
 
 /**
  * Given objects and the current date,
@@ -13,7 +13,7 @@ export type PurgingStrategy = (
 
 export function getPurgingStrategy(config: Config): PurgingStrategy {
   switch (config.strategy) {
-  case 'default':
-    return makeDefaultPurgingStrategy(config)
+  case 'tiered':
+    return makeTieredRetentionStrategy(config)
   }
 }

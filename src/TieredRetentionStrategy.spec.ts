@@ -1,7 +1,7 @@
 import {
-  makeDefaultPurgingStrategy,
+  makeTieredRetentionStrategy,
   chooseEvenlyDistributedSubset,
-} from './DefaultPurgingStrategy'
+} from './TieredRetentionStrategy'
 import {ObjectData} from './StorageBackend'
 
 describe('chooseEvenlyDistributedSubset', () => {
@@ -32,7 +32,7 @@ describe('chooseEvenlyDistributedSubset', () => {
   })
 })
 
-describe('DefaultPurgingStrategy', () => {
+describe('TieredRetentionStrategy', () => {
   function makeObject(date: string | number | Date): ObjectData {
     return {
       id: '',
@@ -43,7 +43,7 @@ describe('DefaultPurgingStrategy', () => {
   }
 
   it('works as intended', () => {
-    const strategy = makeDefaultPurgingStrategy({} as any)
+    const strategy = makeTieredRetentionStrategy({} as any)
 
     const today = '2020-06-11T00:00:00.000Z'
 

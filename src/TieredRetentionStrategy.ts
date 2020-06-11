@@ -66,8 +66,8 @@ export function chooseEvenlyDistributedSubset<T>(
  * For last year, bi-weekly objects are retained.
  * For everything else, bi-monthly objects are retained.
  */
-export function makeDefaultPurgingStrategy(_config: Config): PurgingStrategy {
-  return function DefaultPurgingStrategy(objects, currentDate) {
+export function makeTieredRetentionStrategy(_config: Config): PurgingStrategy {
+  return function TieredRetentionStrategy(objects, currentDate) {
     const dateOfEarliestObject = _.min(objects.map(o => o.updatedAt))!
     function getObjectsUpdatedInRange(start: Date, end: Date) {
       return objects.filter(o => o.updatedAt >= start && o.updatedAt <= end)
