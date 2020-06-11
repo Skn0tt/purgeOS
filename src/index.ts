@@ -61,6 +61,8 @@ class PurgeOS extends Command {
 
     const {flags} = this.parse(PurgeOS)
 
+    flags.yes = flags.yes || !!process.env.yes
+    
     const backend = getStorageBackend(flags)
     const strategy = getPurgingStrategy(flags)
 

@@ -13,5 +13,6 @@ ADD tsconfig.json ./
 RUN yarn build
 
 ENV NODE_ENV production
+ENV YES true
 
 CMD ./bin/run
