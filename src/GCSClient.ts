@@ -16,7 +16,7 @@ export class GCSClient implements ObjectStorageClient {
         private_key: config.gcsPrivateKey,
       },
     })
-    this.bucket = storage.bucket(config.bucket)
+    this.bucket = storage.bucket(config.bucket!)
   }
 
   async getObjects(): Promise<ObjectData<File>[]> {
