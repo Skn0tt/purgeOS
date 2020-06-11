@@ -1,7 +1,7 @@
 {
   "name": "purgeos",
   "description": "Purge old files from object storage.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Simon Knott <info@simonknott.de>",
   "bin": {
     "purgeOS": "./bin/run"
