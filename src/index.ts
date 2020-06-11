@@ -1,5 +1,5 @@
 import {Command, flags} from '@oclif/command'
-import {getObjectStorageClient} from './ObjectStorageClient'
+import {getStorageBackend} from './StorageBackend'
 import {getPurgingStrategy} from './PurgingStrategy'
 import cli from 'cli-ux'
 
@@ -61,7 +61,7 @@ class PurgeOS extends Command {
 
     const {flags} = this.parse(PurgeOS)
 
-    const backend = getObjectStorageClient(flags)
+    const backend = getStorageBackend(flags)
     const strategy = getPurgingStrategy(flags)
 
     this.log('Fetching objects from storage backend ...')

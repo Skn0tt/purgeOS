@@ -1,9 +1,9 @@
-import {ObjectStorageClient, ObjectData} from './ObjectStorageClient'
+import {StorageBackend, ObjectData} from './StorageBackend'
 import {Config} from '.'
 import {Storage, Bucket, File} from '@google-cloud/storage'
 import * as assert from 'assert'
 
-export class GCSClient implements ObjectStorageClient {
+export class GCSClient implements StorageBackend {
   private readonly bucket: Bucket;
 
   constructor(config: Config) {

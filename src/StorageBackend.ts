@@ -7,12 +7,12 @@ export interface ObjectData<T = any> {
   _file: T;
 }
 
-export interface ObjectStorageClient {
+export interface StorageBackend {
   getObjects(): Promise<ObjectData[]>;
   purgeObjects(objects: ObjectData[]): Promise<void>;
 }
 
-export function getObjectStorageClient(env: any): ObjectStorageClient {
+export function getStorageBackend(env: any): StorageBackend {
   switch (env.backend) {
   case 'gcs':
   default:

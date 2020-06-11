@@ -1,4 +1,4 @@
-import {ObjectData} from './ObjectStorageClient'
+import {ObjectData} from './StorageBackend'
 import {Config} from '.'
 import {makeDefaultPurgingStrategy} from './DefaultPurgingStrategy'
 

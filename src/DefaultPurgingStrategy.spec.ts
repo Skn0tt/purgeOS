@@ -2,7 +2,7 @@ import {
   makeDefaultPurgingStrategy,
   chooseEvenlyDistributedSubset,
 } from './DefaultPurgingStrategy'
-import {ObjectData} from './ObjectStorageClient'
+import {ObjectData} from './StorageBackend'
 
 describe('chooseEvenlyDistributedSubset', () => {
   describe('given 1..9', () => {
