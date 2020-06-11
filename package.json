@@ -46,7 +46,6 @@
   "oclif": {
     "bin": "purgeOS"
   },
-  "private": true,
   "repository": "https://github.com/skn0tt/purgeOS",
   "scripts": {
     "posttest": "eslint . --ext .ts --config .eslintrc",
