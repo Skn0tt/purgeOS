@@ -2,8 +2,7 @@ import { Config } from ".";
 import { PurgingStrategy } from "./PurgingStrategy";
 import * as _ from "lodash";
 import * as assert from "assert";
-import { subDays, subWeeks, subMonths } from "date-fns";
-import { ObjectData } from "./ObjectStorageClient";
+import { subDays, subWeeks, subMonths, differenceInHours } from "date-fns";
 
 /**
  * Spans a grid of `size` items from scores `range.start` to `range.end`
@@ -14,16 +13,19 @@ export function chooseEvenlyDistributedSubset<T>(
   options: { range: [number, number]; size: number },
   score: (v: T) => number = (v: any) => +v
 ): T[] {
-  if (as.length <= options.size) {
-    return as;
-  }
-
-  as = as.sort((a, b) => score(a) - score(b));
-
   const {
     range: [min, max],
     size,
   } = options;
+
+  assert(size >= 0);
+
+  if (as.length <= size) {
+    return as;
+  }
+
+  as = as.sort((a, b) => score(a) - score(b));
+  
   const perfectDistance = (max - min) / (size - 1);
 
   const result: T[] = [];
@@ -76,42 +78,53 @@ export function makeDefaultPurgingStrategy(config: Config): PurgingStrategy {
     const rules = [
       // for last day, hourly objects are retained.
       {
-        start: subDays(currentDate, 1),
-        end: currentDate,
-        size: 25,
+        until: subDays(currentDate, 1),
+        objectsPerDay: 25,
       },
       // for last week, half-daily objects are retained.
       {
-        start: subWeeks(currentDate, 1),
-        end: subDays(currentDate, 1),
-        size: 6 * 2,
+        until: subWeeks(currentDate, 1),
+        objectsPerDay: 2,
       },
       // for last month, bi-daily objects are retained.
       {
-        start: subMonths(currentDate, 1),
-        end: subWeeks(currentDate, 1),
-        size: (3 * 7) / 2,
+        until: subMonths(currentDate, 1),
+        objectsPerDay: 1 / 2
       },
-      // for everything else, 10 objects are retained.
+      // for everything else, bi-weekly objects are retained.
       {
-        start: dateOfEarliestObject,
-        end: subMonths(currentDate, 1),
-        size: 10,
+        until: dateOfEarliestObject,
+        objectsPerDay: 1 / 14
       },
     ];
 
-    function score(o: ObjectData) {
-      return +o.updatedAt;
-    }
+    const enrichedRules = rules.map((rule, index) => {
+      const precedingRule = rules[index - 1];
+      const start = rule.until;
+      let end = precedingRule?.until ?? currentDate;
+      if (end < start) {
+        end = start;
+      }
+      
+      const hoursBetween = differenceInHours(end, start);
+      const daysBetween = hoursBetween / 24;
+      const size = daysBetween * rule.objectsPerDay;
 
-    const objectsToKeep = _.flatMap(rules, (rule) =>
+      return {
+        start,
+        end,
+        size
+      }
+    })
+
+    const objectsToKeep = _.flatMap(enrichedRules, (rule) =>
       chooseEvenlyDistributedSubset(
         getObjectsUpdatedInRange(rule.start, rule.end),
         {
           range: [+rule.start, +rule.end],
           size: rule.size,
         },
-        score
+        o => +o.updatedAt
       )
     );
 
