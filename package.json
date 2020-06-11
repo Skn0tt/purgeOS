@@ -14,16 +14,14 @@
     "@oclif/plugin-help": "^3",
     "date-fns": "^2.14.0",
     "lodash": "^4.17.15",
-    "tslib": "^1"
+    "tslib": "^1",
+    "cli-ux": "^5.4.6"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
-    "@oclif/test": "^1",
-    "@types/chai": "^4",
     "@types/jest": "^26.0.0",
     "@types/lodash": "^4.14.155",
     "@types/node": "^10",
-    "cli-ux": "^5.4.6",
     "eslint": "^5.13",
     "eslint-config-oclif": "^3.1",
     "eslint-config-oclif-typescript": "^0.1",
