@@ -5,6 +5,9 @@ import {getPurgingStrategy} from './PurgingStrategy'
 export interface Config {
   backend: 'gcs';
   strategy: 'default';
+  bucket?: string;
+  gcsClientEmail?: string;
+  gcsPrivateKey?: string;
 }
 
 class PurgeOS extends Command {
@@ -32,6 +35,18 @@ class PurgeOS extends Command {
       options: ['default'],
       default: 'default',
     }) as flags.IOptionFlag<'default'>,
+    bucket: flags.string({
+      description: "Bucket",
+      env: "BUCKET"
+    }),
+    gcsClientEmail: flags.string({
+      description: "GCS Client Email",
+      env: "GCS_CLIENT_EMAIL"
+    }),
+    gcsPrivateKey: flags.string({
+      description: "GCS Private Key",
+      env: "GCS_PRIVATE_KEY"
+    }),
   };
 
   async run() {
