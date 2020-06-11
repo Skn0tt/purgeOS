@@ -1,36 +1,58 @@
 import { Config } from ".";
 import { PurgingStrategy } from "./PurgingStrategy";
+import * as _ from "lodash";
+import * as assert from "assert";
+import { subDays, subWeeks } from "date-fns";
 
-export function range(min: number, max?: number): number[] {
-  if (typeof max === "undefined") {
-    return range(0, min);
+/**
+ * Spans a grid of `size` items from scores `range.start` to `range.end`
+ * Picks `size` items whose scores best match the grid.
+ */
+export function chooseEvenlyDistributedSubset<T>(
+  as: T[],
+  options: { range: [number, number], size: number },
+  score: (v: T) => number = (v: any) => +v,
+): T[] {
+  if (as.length <= options.size) {
+    return as;
   }
 
-  return Array(max - min).fill(0).map((_, i) => i + min);
-}
+  as = as.sort((a, b) => score(a) - score(b));
 
-// source: https://stackoverflow.com/a/32253851/8714863
-export function chooseEvenlyDistributedSubset<T>(
-  a: T[],
-  score: (v: T) => number,
-  sizeOfSubset: number
-): T[] {
-  const n = a.length;
-  const table: number[][] = Array(n)
-    .fill(0)
-    .map(() => Array(sizeOfSubset).fill(Number.MAX_VALUE));
+  const { range: [min, max], size } = options;
+  const perfectDistance = (max - min) / (size - 1);
 
-  for (let i of range(1, n)) {
-    for (let j of range(sizeOfSubset)) {
-      table[i][j] = Math.max(
-        ...range(i).map(k => Math.min(
-          table[k][j],
-          score(a[i]) - score(a[k])
-        ))
-      )
+  const result: T[] = [];
+
+  let aPointer = 0;
+  for (let i = 0; i < size; i++) {
+    const goal = min + (i * perfectDistance);
+
+    while (true) {
+      if (aPointer + 1 >= as.length) {
+        result.push(as[aPointer]);
+        break;
+      }
+
+      const currentA = as[aPointer];
+      const nextA = as[aPointer + 1];
+
+      const currentFit = Math.abs(score(currentA) - goal);
+      const nextFit = Math.abs(score(nextA) - goal);
+
+      aPointer++;
+
+      const currentIsBetterThanNextOne = currentFit < nextFit;
+      if (currentIsBetterThanNextOne) {
+        result.push(currentA);
+        break;
+      }
     }
   }
-  return a;
+
+  assert(result.length == size);
+
+  return result;
 }
 
 /**
@@ -42,6 +64,26 @@ export function chooseEvenlyDistributedSubset<T>(
  */
 export function makeDefaultPurgingStrategy(config: Config): PurgingStrategy {
   return function DefaultPurgingStrategy(objects, currentDate) {
-    return objects;
+    function getObjectsUpdatedSince(date: Date) {
+      return objects.filter(o => o.updatedAt >= date);
+    }
+
+    const objectsToKeep = [
+      ...chooseEvenlyDistributedSubset(
+        getObjectsUpdatedSince(
+          subDays(currentDate, 1),
+        ),
+        {
+          range: [
+            +subDays(currentDate, 1),
+            +currentDate
+          ],
+          size: 25
+        },
+        d => +d.updatedAt
+      )
+    ]
+
+    return objects.filter(o => !objectsToKeep.includes(o));
   };
 }
