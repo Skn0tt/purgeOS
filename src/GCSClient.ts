@@ -8,9 +8,9 @@ export class GCSClient implements ObjectStorageClient {
   private readonly bucket: Bucket;
 
   constructor(config: Config) {
-    assert(!!config.gcsClientEmail);
-    assert(!!config.gcsPrivateKey);
-    assert(!!config.bucket);
+    assert(!!config.gcsClientEmail, "Please provide a GCS Client Email");
+    assert(!!config.gcsPrivateKey, "Please provide a GCS Private Key");
+    assert(!!config.bucket, "Please provide a bucket identifier");
     const storage = new Storage({
       credentials: {
         client_email: config.gcsClientEmail,
@@ -25,7 +25,7 @@ export class GCSClient implements ObjectStorageClient {
     return files.map(f => ({
       id: f.id!,
       name: f.name,
-      updatedAt: f.metadata.updated,
+      updatedAt: new Date(f.metadata.updated),
       _file: f,
     }))
   }

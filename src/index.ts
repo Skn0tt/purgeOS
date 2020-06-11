@@ -1,6 +1,7 @@
 import {Command, flags} from '@oclif/command'
 import {getObjectStorageClient} from './ObjectStorageClient'
 import {getPurgingStrategy} from './PurgingStrategy'
+import cli from 'cli-ux'
 
 export interface Config {
   backend: 'gcs';
@@ -22,6 +23,12 @@ class PurgeOS extends Command {
       env: 'VERBOSE',
       default: false,
       char: 'v',
+    }),
+    yes: flags.boolean({
+      description: "Skip Prompt",
+      env: "YES",
+      default: false,
+      char: "y"
     }),
     backend: flags.enum({
       description: 'Storage Backend',
@@ -64,11 +71,23 @@ class PurgeOS extends Command {
     this.log('Deciding which ones to purge ...')
     const objectsToPurge = strategy(objects, new Date())
 
+    if (objectsToPurge.length === 0) {
+      this.log("Nothing to purge.");
+      return;
+    }
+
     if (flags.verbose) {
       this.log('Will purge the following objects:')
-      this.log(objectsToPurge.map(o => JSON.stringify(o)).join('\n'))
+      this.log(objectsToPurge.map(o => o.name).join('\n'))
     } else {
       this.log(`Will purge ${objectsToPurge.length} objects.`)
+    }
+
+    if (!flags.yes) {
+      const confirmed = await cli.confirm("Purge?");
+      if (!confirmed) {
+        return;
+      }
     }
 
     this.log('Purging ...')

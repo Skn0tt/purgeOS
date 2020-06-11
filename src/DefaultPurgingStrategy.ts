@@ -56,8 +56,6 @@ export function chooseEvenlyDistributedSubset<T>(
     }
   }
 
-  assert(result.length == size);
-
   return result;
 }
 

@@ -23,6 +23,7 @@
     "@types/jest": "^26.0.0",
     "@types/lodash": "^4.14.155",
     "@types/node": "^10",
+    "cli-ux": "^5.4.6",
     "eslint": "^5.13",
     "eslint-config-oclif": "^3.1",
     "eslint-config-oclif-typescript": "^0.1",
