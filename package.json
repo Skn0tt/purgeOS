@@ -1,7 +1,7 @@
 {
   "name": "purgeos",
   "description": "Purge old files from object storage.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Simon Knott <info@simonknott.de>",
   "bin": {
     "purgeOS": "./bin/run"
@@ -12,10 +12,10 @@
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^3",
+    "cli-ux": "^5.4.6",
     "date-fns": "^2.14.0",
     "lodash": "^4.17.15",
-    "tslib": "^1",
-    "cli-ux": "^5.4.6"
+    "tslib": "^1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",

@@ -22,7 +22,7 @@ $ npm install -g purgeos
 $ purgeOS COMMAND
 running command...
 $ purgeOS (-v|--version|version)
-purgeos/0.0.1 darwin-x64 node-v13.11.0
+purgeos/0.1.0 darwin-x64 node-v13.11.0
 $ purgeOS --help [COMMAND]
 USAGE
   $ purgeOS COMMAND
